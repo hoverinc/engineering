@@ -1,0 +1,220 @@
+#!/bin/sh
+
+# script/bootstrap: Setup a new laptop at HOVER
+
+# Exit script if any commands return errors (if they exit with non-zero)
+set -e
+
+# Work from the user's `Downloads` directory
+cd "$HOME/Downloads"
+
+echo
+echo "==> Running script/bootstrap…"
+echo
+
+# Create either .bash_profile (default) or .zshrc in $HOME directory
+echo "==> Do you plan to use Z shell? (y/N)"
+read zsh_user </dev/tty || {
+  zsh_user="n"
+}
+
+if [[ $zsh_user == "y" ]]; then
+  SHELL_CONFIG="$HOME/.zshrc"
+else
+  SHELL_CONFIG="$HOME/.bash_profile"
+fi
+touch $SHELL_CONFIG
+
+# Check if RSA SSH keys already exist
+if [[ -f ~/.ssh/id_rsa ]]; then
+  echo "==> Found SSH key in ~/.ssh/id_rsa"
+  echo
+else
+  # Setup Git/GitHub
+  echo "==> What email address do you use with your GitHub account?"
+
+  read github_email </dev/tty || {
+    github_email=""
+  }
+
+  if [[ $github_email == "" ]]; then
+    echo "==> ERROR! An email address is required."
+    echo "==>        Re-run this script to try again."
+    echo
+    exit 1
+  fi
+
+  # From: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+  echo "==> Generating SSH key for $github_email …"
+  ssh-keygen -t rsa -b 4096 -C "$github_email"
+  echo
+
+  echo "==> Starting ssh-agent in the background…"
+  eval "$(ssh-agent -s)"
+  echo
+
+  # Ensure that SSH config file exists
+  touch ~/.ssh/config
+
+  # Add SSH key loading to SSH config
+  echo "==> Adding SSH config to automatically load SSH keys"
+  grep -qF -- "IdentityFile ~/.ssh/id_rsa" ~/.ssh/config || echo "\n\nHost *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa\n\n" >> ~/.ssh/config
+  echo
+
+  # Add SSH private key to the ssh-agent and store passphrase in your keychain
+  echo "==> Adding SSH key to ssh-agent and storing passphrase in your keychain"
+  ssh-add -K ~/.ssh/id_rsa
+  echo
+fi
+
+echo "==> Copying your public SSH key to clipboard…"
+pbcopy < ~/.ssh/id_rsa.pub
+echo
+
+echo "==> Your browser will be opened to a GitHub SSH Keys settings page…"
+echo "==> You’ll need to paste into the 'Key' field, then click the 'Add SSK Key' button…"
+echo
+
+echo "==> Press any key to open your browser…"
+read
+
+echo "==> Opening your browser to a GitHub settings page…"
+open https://github.com/settings/ssh/new
+echo
+
+echo "==> Press any key to continue after you have saved your SSH key on GitHub…"
+read
+echo
+
+# Download strap.sh and run it
+echo "==> Downloading strap.sh script from github.com/MikeMcQuaid/strap…"
+curl https://raw.githubusercontent.com/MikeMcQuaid/strap/master/bin/strap.sh -o strap.sh
+echo
+
+echo "==> Strapping your Mac…"
+sh strap.sh
+echo
+
+# Delete strap.sh
+echo "==> Deleting strap.sh script…"
+rm strap.sh
+echo
+
+# Set the Ruby version, same as the .ruby-version file
+ruby_version="2.6.5"
+
+# Update Homebrew and ruby-build to get the latest list of Rubies
+brew update
+brew upgrade ruby-build || brew install ruby-build
+brew upgrade rbenv      || brew install rbenv
+
+# Install Ruby version from .ruby-version file
+echo "==> Installing Ruby: $ruby_version …"
+rbenv install -s $ruby_version
+echo
+
+# Add current ruby-version to the home directory
+echo $ruby_version > ~/.ruby-version
+
+# Add rbenv’s auto-switching to .bash_profile/.zshrc, unless its already in there
+# Then, re-source the .bash_profile/.zshrc for current user
+echo "==> Adding Ruby version auto-switching to $SHELL_CONFIG"
+
+echo "==> Initializing rbenv…"
+grep -qF -- 'eval "$(rbenv init -)"' $SHELL_CONFIG || echo '\n# rbenv ruby version auto-switching - inserted by @hoverinc\neval "$(rbenv init -)"' >> $SHELL_CONFIG
+echo
+
+echo "==> Rehashing rbenv…"
+rbenv rehash
+echo
+
+# Install Bundler
+echo "==> Installing the Bundler Ruby gem…"
+rbenv exec gem install bundler
+echo
+
+# Install nvm via its install script, not Homebrew
+echo "==> Installing nvm…"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+echo
+
+# Create NVM’s working directory if it doesn’t exist
+mkdir -p ~/.nvm
+
+# Install latest Node and NPM with nvm
+echo "==> Installing latest Node and NPM…"
+set +e
+source ~/.nvm/nvm.sh # This loads nvm
+nvm install  --lts --latest-npm
+set -e
+echo
+
+# Pin Postgres to a particular legacy version
+required_postgresql_version="9.6.10"
+
+# Check if Postgres is already installed
+if which psql > /dev/null; then
+  postgres_installed="true"
+  postgres_version=`psql --version`
+
+  if [[ $postgres_version=="psql (PostgreSQL) $required_postgresql_version" ]]; then
+    required_postgres_version_installed="true"
+  else
+    required_postgres_version_installed="false"
+  fi
+else
+  postgres_installed="false"
+  required_postgres_version_installed="false"
+fi
+
+# Install Postgres
+if [[ $required_postgres_version_installed == "false" ]]; then
+  brew cleanup
+  echo
+
+  # Tap CloverHealth’s Postgres and Postgis formulas
+  echo "==> Tapping CloverHealth’s Postgres and Postgis formulas…"
+  brew tap cloverhealth/homebrew-tap
+  echo
+
+  # Re-install latest Postgres
+  echo "==> Re-installing latest Postgres…"
+  brew install postgresql
+  echo
+
+  # Unlink latest Postgres formula
+  echo "==> Unlinking latest brew Postgres formula…"
+  brew unlink postgresql
+  echo
+
+  # Delete any previous Postgres data directory
+  echo "==> Deleting Postgres data directory…"
+  rm -rf /usr/local/var/postgres
+  echo
+
+  # Install Postgres via CloverHealth’s formula
+  echo "==> Installing CloverHealth’s version of Postgres…"
+  brew install cloverhealth/tap/postgresql
+  echo
+
+  # Switch to Postgres $required_postgresql_version
+  echo "==> Switching to version $required_postgresql_version of Postgres…"
+  brew switch postgresql $required_postgresql_version
+  echo
+
+  # Ensure that the Postgresql service is running
+  echo "==> Start Postgis service…"
+  brew services restart postgresql
+
+  # Install Postgis via CloverHealth’s formula
+  echo "==> Installing CloverHealth’s version of Postgis…"
+  brew install cloverhealth/tap/postgis
+  echo
+fi
+
+echo "==> Running engineering Brewfile to install remaining developer tools and various other niceties…"
+curl https://raw.githubusercontent.com/hoverinc/engineering/master/Brewfile | brew bundle --file=-
+
+# All done!
+echo "==> SUCCESS! Your development environment is now bootstrapped!"
+echo
