@@ -7,7 +7,7 @@ https://github.com/hoverinc/engineering
 Copy/paste this into `Terminal.app` on your Mac
 
 ```sh
-curl https://raw.githubusercontent.com/hoverinc/engineering/master/script/bootstrap
+curl https://raw.githubusercontent.com/hoverinc/engineering/master/script/bootstrap | sh
 ```
 
 You'll be asked for your:
