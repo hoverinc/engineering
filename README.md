@@ -39,3 +39,7 @@ You'll be asked for your:
 - Installs Ruby
 - Installs NVM, the latest Node, and the latest NPM
 - Installs the particular versions of Postgres and PostGIS that we care about
+
+# Contents of the Repo
+
+- [Recommended Reading](https://github.com/hoverinc/engineering/blob/master/recommended-reading)
