@@ -43,3 +43,7 @@ You'll be asked for your:
 # Contents of the Repo
 
 - [Recommended Reading](https://github.com/hoverinc/engineering/blob/master/recommended-reading)
+
+# Other Resources
+
+Hover Employees should take a look at the [engineering-internal](https://github.com/hoverinc/engineering-internal) repo
