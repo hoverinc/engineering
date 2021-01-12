@@ -73,6 +73,7 @@ echo
 
 echo "==> Your browser will be opened to a GitHub SSH Keys settings page…"
 echo "==> You’ll need to paste into the 'Key' field, then click the 'Add SSK Key' button…"
+echo "==> Then, click 'Enable SSO' for that key."
 echo
 
 echo "==> Press any key to open your browser…"
@@ -82,7 +83,7 @@ echo "==> Opening your browser to a GitHub settings page…"
 open https://github.com/settings/ssh/new
 echo
 
-echo "==> Press any key to continue after you have saved your SSH key on GitHub…"
+echo "==> Press any key to continue after you have saved your SSH key on GitHub and enabled SSO…"
 read
 echo
 
