@@ -65,26 +65,26 @@ else
   echo "==> Adding SSH key to ssh-agent and storing passphrase in your keychain"
   ssh-add -K ~/.ssh/id_rsa
   echo
+
+  echo "==> Your browser will be opened to a GitHub SSH Keys settings page…"
+  echo "==> You’ll need to paste into the 'Key' field, then click the 'Add SSK Key' button…"
+  echo "==> Then, click 'Enable SSO' for that key."
+  echo
+
+  echo "==> Press any key to open your browser…"
+  read
+
+  echo "==> Opening your browser to a GitHub settings page…"
+  open https://github.com/settings/ssh/new
+  echo
+
+  echo "==> Press any key to continue after you have saved your SSH key on GitHub and enabled SSO…"
+  read
+  echo
 fi
 
 echo "==> Copying your public SSH key to clipboard…"
 pbcopy < ~/.ssh/id_rsa.pub
-echo
-
-echo "==> Your browser will be opened to a GitHub SSH Keys settings page…"
-echo "==> You’ll need to paste into the 'Key' field, then click the 'Add SSK Key' button…"
-echo "==> Then, click 'Enable SSO' for that key."
-echo
-
-echo "==> Press any key to open your browser…"
-read
-
-echo "==> Opening your browser to a GitHub settings page…"
-open https://github.com/settings/ssh/new
-echo
-
-echo "==> Press any key to continue after you have saved your SSH key on GitHub and enabled SSO…"
-read
 echo
 
 # Download strap.sh and run it
@@ -151,7 +151,7 @@ set -e
 echo
 
 # Pin Postgres to a particular legacy version
-required_postgresql_version="9.6.10"
+required_postgresql_version="13"
 
 # Check if Postgres is already installed
 if which psql > /dev/null; then
@@ -173,9 +173,9 @@ if [[ $required_postgres_version_installed == "false" ]]; then
   brew cleanup
   echo
 
-  # Tap CloverHealth’s Postgres and Postgis formulas
-  echo "==> Tapping CloverHealth’s Postgres and Postgis formulas…"
-  brew tap cloverhealth/homebrew-tap
+  # Delete any previous Postgres data directory
+  echo "==> Deleting Postgres data directory…"
+  rm -rf /usr/local/var/postgres
   echo
 
   # Re-install latest Postgres
@@ -183,33 +183,23 @@ if [[ $required_postgres_version_installed == "false" ]]; then
   brew install postgresql
   echo
 
-  # Unlink latest Postgres formula
-  echo "==> Unlinking latest brew Postgres formula…"
-  brew unlink postgresql
-  echo
-
-  # Delete any previous Postgres data directory
-  echo "==> Deleting Postgres data directory…"
-  rm -rf /usr/local/var/postgres
-  echo
-
-  # Install Postgres via CloverHealth’s formula
-  echo "==> Installing CloverHealth’s version of Postgres…"
-  brew install cloverhealth/tap/postgresql
-  echo
-
-  # Switch to Postgres $required_postgresql_version
-  echo "==> Switching to version $required_postgresql_version of Postgres…"
-  brew switch postgresql $required_postgresql_version
-  echo
-
   # Ensure that the Postgresql service is running
   echo "==> Start Postgis service…"
   brew services restart postgresql
 
-  # Install Postgis via CloverHealth’s formula
-  echo "==> Installing CloverHealth’s version of Postgis…"
-  brew install cloverhealth/tap/postgis
+  # Install Postgis
+  echo "==> Installing Postgis…"
+  brew install postgis
+  echo
+
+  db_user_created=$(psql postgres -t -c "SELECT true FROM pg_roles WHERE rolname = 'postgres'")
+
+  if [[ $db_user_created=="t" ]]; then
+    echo "==> 'postgres' superuser already exists"
+  else
+    echo '==> Creating PostgresQL superuser, named: "postgres"…'
+    psql postgres -c "CREATE USER postgres SUPERUSER";
+  fi
   echo
 fi
 
