@@ -191,6 +191,16 @@ if [[ $required_postgres_version_installed == "false" ]]; then
   echo "==> Installing Postgis…"
   brew install postgis
   echo
+
+  db_user_created=$(psql postgres -t -c "SELECT true FROM pg_roles WHERE rolname = 'postgres'")
+
+  if [[ $db_user_created=="t" ]]; then
+    echo "==> 'postgres' superuser already exists"
+  else
+    echo '==> Creating PostgresQL superuser, named: "postgres"…'
+    psql postgres -c "CREATE USER postgres SUPERUSER";
+  fi
+  echo
 fi
 
 echo "==> Running engineering Brewfile to install remaining developer tools and various other niceties…"
