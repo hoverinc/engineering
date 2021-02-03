@@ -151,7 +151,7 @@ set -e
 echo
 
 # Pin Postgres to a particular legacy version
-required_postgresql_version="9.6.10"
+required_postgresql_version="13"
 
 # Check if Postgres is already installed
 if which psql > /dev/null; then
@@ -173,9 +173,9 @@ if [[ $required_postgres_version_installed == "false" ]]; then
   brew cleanup
   echo
 
-  # Tap CloverHealth’s Postgres and Postgis formulas
-  echo "==> Tapping CloverHealth’s Postgres and Postgis formulas…"
-  brew tap cloverhealth/homebrew-tap
+  # Delete any previous Postgres data directory
+  echo "==> Deleting Postgres data directory…"
+  rm -rf /usr/local/var/postgres
   echo
 
   # Re-install latest Postgres
@@ -183,33 +183,13 @@ if [[ $required_postgres_version_installed == "false" ]]; then
   brew install postgresql
   echo
 
-  # Unlink latest Postgres formula
-  echo "==> Unlinking latest brew Postgres formula…"
-  brew unlink postgresql
-  echo
-
-  # Delete any previous Postgres data directory
-  echo "==> Deleting Postgres data directory…"
-  rm -rf /usr/local/var/postgres
-  echo
-
-  # Install Postgres via CloverHealth’s formula
-  echo "==> Installing CloverHealth’s version of Postgres…"
-  brew install cloverhealth/tap/postgresql
-  echo
-
-  # Switch to Postgres $required_postgresql_version
-  echo "==> Switching to version $required_postgresql_version of Postgres…"
-  brew switch postgresql $required_postgresql_version
-  echo
-
   # Ensure that the Postgresql service is running
   echo "==> Start Postgis service…"
   brew services restart postgresql
 
-  # Install Postgis via CloverHealth’s formula
-  echo "==> Installing CloverHealth’s version of Postgis…"
-  brew install cloverhealth/tap/postgis
+  # Install Postgis
+  echo "==> Installing Postgis…"
+  brew install postgis
   echo
 fi
 
