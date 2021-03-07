@@ -150,26 +150,15 @@ nvm install  --lts --latest-npm
 set -e
 echo
 
-# Pin Postgres to a particular legacy version
-required_postgresql_version="13"
+postgres_installed="false"
 
 # Check if Postgres is already installed
 if which psql > /dev/null; then
   postgres_installed="true"
-  postgres_version=`psql --version`
-
-  if [[ $postgres_version=="psql (PostgreSQL) $required_postgresql_version" ]]; then
-    required_postgres_version_installed="true"
-  else
-    required_postgres_version_installed="false"
-  fi
-else
-  postgres_installed="false"
-  required_postgres_version_installed="false"
 fi
 
 # Install Postgres
-if [[ $required_postgres_version_installed == "false" ]]; then
+if [[ $postgres_installed == "false" ]]; then
   brew cleanup
   echo
 
@@ -186,11 +175,6 @@ if [[ $required_postgres_version_installed == "false" ]]; then
   # Ensure that the Postgresql service is running
   echo "==> Start Postgis service…"
   brew services restart postgresql
-
-  # Install Postgis
-  echo "==> Installing Postgis…"
-  brew install postgis
-  echo
 
   db_user_created=$(psql postgres -t -c "SELECT true FROM pg_roles WHERE rolname = 'postgres'")
 
