@@ -14,7 +14,6 @@ brew 'docker-machine-completion'
 brew 'git'
 brew 'graphviz'
 brew 'htop'
-brew 'hub'
 brew 'jq'
 brew 'rbenv'
 brew 'redis', restart_service: :changed
