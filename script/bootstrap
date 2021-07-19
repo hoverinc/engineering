@@ -12,17 +12,7 @@ echo
 echo "==> Running script/bootstrap…"
 echo
 
-# Create either .bash_profile (default) or .zshrc in $HOME directory
-echo "==> Do you plan to use Z shell? (y/N)"
-read zsh_user </dev/tty || {
-  zsh_user="n"
-}
-
-if [[ $zsh_user == "y" ]]; then
-  SHELL_CONFIG="$HOME/.zshrc"
-else
-  SHELL_CONFIG="$HOME/.bash_profile"
-fi
+SHELL_CONFIG="$HOME/.zshrc"
 touch $SHELL_CONFIG
 
 # Check if RSA SSH keys already exist
@@ -101,94 +91,17 @@ echo "==> Deleting strap.sh script…"
 rm strap.sh
 echo
 
-# Set the Ruby version, same as the .ruby-version file
-ruby_version="2.6.5"
+echo "==> Installing asdf…"
 
-# Update Homebrew and ruby-build to get the latest list of Rubies
-brew update
-brew upgrade ruby-build || brew install ruby-build
-brew upgrade rbenv      || brew install rbenv
+brew install asdf
+asdf plugin-list | grep ruby || asdf plugin-add ruby
+asdf plugin-list | grep nodejs || asdf plugin-add nodejs
+asdf plugin-list | grep yarn || asdf plugin-add yarn
+bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 
-# Install Ruby version from .ruby-version file
-echo "==> Installing Ruby: $ruby_version …"
-rbenv install -s $ruby_version
-echo
-
-# Add current ruby-version to the home directory
-echo $ruby_version > ~/.ruby-version
-
-# Add rbenv’s auto-switching to .bash_profile/.zshrc, unless its already in there
-# Then, re-source the .bash_profile/.zshrc for current user
-echo "==> Adding Ruby version auto-switching to $SHELL_CONFIG"
-
-echo "==> Initializing rbenv…"
-grep -qF -- 'eval "$(rbenv init -)"' $SHELL_CONFIG || echo '\n# rbenv ruby version auto-switching - inserted by @hoverinc\neval "$(rbenv init -)"' >> $SHELL_CONFIG
-echo
-
-echo "==> Rehashing rbenv…"
-rbenv rehash
-echo
-
-# Install Bundler
-echo "==> Installing the Bundler Ruby gem…"
-rbenv exec gem install bundler
-echo
-
-# Install nvm via its install script, not Homebrew
-echo "==> Installing nvm…"
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
-echo
-
-# Create NVM’s working directory if it doesn’t exist
-mkdir -p ~/.nvm
-
-# Install latest Node and NPM with nvm
-echo "==> Installing latest Node and NPM…"
-set +e
-source ~/.nvm/nvm.sh # This loads nvm
-nvm install  --lts --latest-npm
-set -e
-echo
-
-postgres_installed="false"
-
-# Check if Postgres is already installed
-if which psql > /dev/null; then
-  postgres_installed="true"
-fi
-
-# Install Postgres
-if [[ $postgres_installed == "false" ]]; then
-  brew cleanup
-  echo
-
-  # Delete any previous Postgres data directory
-  echo "==> Deleting Postgres data directory…"
-  rm -rf /usr/local/var/postgres
-  echo
-
-  # Re-install latest Postgres
-  echo "==> Re-installing latest Postgres…"
-  brew install postgresql
-  echo
-
-  # Ensure that the Postgresql service is running
-  echo "==> Start Postgis service…"
-  brew services restart postgresql
-
-  db_user_created=$(psql postgres -t -c "SELECT true FROM pg_roles WHERE rolname = 'postgres'")
-
-  if [[ $db_user_created=="t" ]]; then
-    echo "==> 'postgres' superuser already exists"
-  else
-    echo '==> Creating PostgresQL superuser, named: "postgres"…'
-    psql postgres -c "CREATE USER postgres SUPERUSER";
-  fi
-  echo
-fi
 
 echo "==> Running engineering Brewfile to install remaining developer tools and various other niceties…"
-curl https://raw.githubusercontent.com/hoverinc/engineering/master/Brewfile | brew bundle --file=-
+curl https://raw.githubusercontent.com/emiliohealth/workstation/main/Brewfile | brew bundle --file=-
 
 # All done!
 echo "==> SUCCESS! Your development environment is now bootstrapped!"
