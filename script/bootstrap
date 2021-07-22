@@ -94,12 +94,14 @@ echo "==> Deleting strap.sh script…"
 rm strap.sh
 echo
 
-echo "==> Injecting asdf into PATH"
-. $(brew --prefix asdf)/asdf.sh
-echo
+echo "export PATH=/opt/homebrew/bin:$PATH" >> $SHELL_CONFIG && source $SHELL_CONFIG
 
 echo "==> Installing asdf…"
 brew install asdf
+echo
+
+echo "==> Injecting asdf into PATH"
+. $(brew --prefix asdf)/asdf.sh
 echo
 
 echo "==> Installing ruby asdf plugin"
