@@ -92,15 +92,27 @@ rm strap.sh
 echo
 
 echo "==> Installing asdf…"
-
 brew install asdf
+echo
+
+echo "==> Injecting asdf into PATH"
+. $(brew --prefix asdf)/asdf.sh
+echo
+
+echo "==> Installing ruby asdf plugin"
 asdf plugin-list | grep ruby || asdf plugin-add ruby
-asdf plugin-list | grep nodejs || asdf plugin-add nodejs
+echo
+
+echo "==> Installing node asdf plugin"
+asdf plugin-list | grep nodejs || asdf plugin-add nodejs  
+echo
+
+echo "==> Installing yarn asdf plugin"
 asdf plugin-list | grep yarn || asdf plugin-add yarn
 bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+echo
 
-
-echo "==> Running engineering Brewfile to install remaining developer tools and various other niceties…"
+echo "==> Bundling engineering Brewfile to install remaining developer tools and various other niceties…"
 curl https://raw.githubusercontent.com/emiliohealth/workstation/main/Brewfile | brew bundle --file=-
 
 # All done!

@@ -1,6 +1,6 @@
-# HOVER Engineering
+# Brightline Engineering Workstation Setup
 
-https://github.com/hoverinc/engineering
+https://github.com/emiliohealth/workstation
 
 # Development setup
 
@@ -35,14 +35,4 @@ You'll be asked for your:
   > - Installs dotfiles from a user's https://github.com/username/dotfiles repository and runs script/setup to configure them; also runs script/strap-after-setup after setting up everything else
   > - Installs software from a user's Brewfile in their https://github.com/username/homebrew-brewfile repository or .Brewfile in their home directory.
 - Installs everything from this repo's [`Brewfile`](https://github.com/hoverinc/engineering/blob/master/Brewfile)
-- Installs Ruby
-- Installs NVM, the latest Node, and the latest NPM
-- Installs the particular versions of Postgres and PostGIS that we care about
-
-# Contents of the Repo
-
-- [Recommended Reading](https://github.com/hoverinc/engineering/blob/master/recommended-reading)
-
-# Other Resources
-
-Hover Employees should take a look at the [engineering-internal](https://github.com/hoverinc/engineering-internal) repo
+- Installs asdf, ruby, node, and yarn
