@@ -56,26 +56,29 @@ else
   ssh-add -K ~/.ssh/id_rsa
   echo
 
+  echo "==> Copying your public SSH key to clipboard…"
+  pbcopy < ~/.ssh/id_rsa.pub
+  echo
+
   echo "==> Your browser will be opened to a GitHub SSH Keys settings page…"
-  echo "==> You’ll need to paste into the 'Key' field, then click the 'Add SSK Key' button…"
-  echo "==> Then, click 'Enable SSO' for that key."
+  echo "==> You’ll need to paste into the 'Key' field, then click the 'Add SSH Key' button…"
   echo
 
   echo "==> Press any key to open your browser…"
-  read -s -k "?Press any key to continue"
+  read noop </dev/tty || {
+    noop=""
+  }
 
   echo "==> Opening your browser to a GitHub settings page…"
   open https://github.com/settings/ssh/new
   echo
 
-  echo "==> Press any key to continue after you have saved your SSH key on GitHub and enabled SSO…"
-  read -s -k "?Press any key to continue"
+  echo "==> Press any key to continue after you have saved your SSH key on GitHub…"
+  read nooop </dev/tty || {
+    nooop=""
+  }
   echo
 fi
-
-echo "==> Copying your public SSH key to clipboard…"
-pbcopy < ~/.ssh/id_rsa.pub
-echo
 
 # Download strap.sh and run it
 echo "==> Downloading strap.sh script from github.com/MikeMcQuaid/strap…"
