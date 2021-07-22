@@ -10,6 +10,8 @@ Copy/paste this into `Terminal.app` on your Mac
 curl https://raw.githubusercontent.com/emiliohealth/workstation/main/script/bootstrap | sh
 ```
 
+> Note: You may need to run this command twice, due to an unknown bug right after closing the GitHub browser. If the script halts, re-run the command below to finish bootstrapping.
+
 You'll be asked for your:
 
 - **GitHub account email address** : This is used to create SSH keys for working with GitHub.
