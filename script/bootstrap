@@ -116,7 +116,7 @@ echo
 
 echo "==> Installing yarn asdf plugin"
 asdf plugin-list | grep yarn || asdf plugin-add yarn
-bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+bash $ASDF_DATA_DIR/plugins/nodejs/bin/import-release-team-keyring
 echo
 
 echo "==> Bundling engineering Brewfile to install remaining developer tools and various other niceties…"
