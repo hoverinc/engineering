@@ -101,7 +101,9 @@ brew install asdf
 echo
 
 echo "==> Injecting asdf into PATH"
-. $(brew --prefix asdf)/asdf.sh
+echo 'export ASDF_DATA_DIR=`brew --prefix asdf`/' >> $SHELL_CONFIG
+echo 'source $ASDF_DATA_DIR/asdf.sh' >> $SHELL_CONFIG
+source $SHELL_CONFIG
 echo
 
 echo "==> Installing ruby asdf plugin"
