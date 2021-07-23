@@ -94,7 +94,15 @@ echo "==> Deleting strap.sh script…"
 rm strap.sh
 echo
 
-echo "export PATH=/opt/homebrew/bin:$PATH" >> $SHELL_CONFIG && source $SHELL_CONFIG
+echo "==> Injecting homebrew into PATH"
+if grep -Fq "/opt/homebrew/bin" $SHELL_CONFIG
+then
+  echo "    Already found homebrew in path. Skipping."
+else
+  echo "export PATH=/opt/homebrew/bin:$PATH" >> $SHELL_CONFIG && source $SHELL_CONFIG
+  echo
+fi
+source $SHELL_CONFIG
 
 echo "==> Bundling engineering Brewfile to install remaining developer tools and various other niceties…"
 curl https://raw.githubusercontent.com/hellobrightline/workstation/main/Brewfile | brew bundle --file=-
@@ -104,10 +112,16 @@ brew install asdf
 echo
 
 echo "==> Injecting asdf into PATH"
-echo 'export ASDF_DATA_DIR=`brew --prefix asdf`/' >> $SHELL_CONFIG
-echo 'source $ASDF_DATA_DIR/asdf.sh' >> $SHELL_CONFIG
+if grep -Fq "ASDF_DATA_DIR" $SHELL_CONFIG
+then
+  echo "    Already found asdf in path. Skipping."
+else
+  echo 'export ASDF_DATA_DIR=`brew --prefix asdf`/' >> $SHELL_CONFIG
+  echo 'source $ASDF_DATA_DIR/asdf.sh' >> $SHELL_CONFIG
+  echo
+fi
 source $SHELL_CONFIG
-echo
+
 
 echo "==> Installing ruby asdf plugin"
 asdf plugin-list | grep ruby || asdf plugin-add ruby
