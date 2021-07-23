@@ -96,6 +96,9 @@ echo
 
 echo "export PATH=/opt/homebrew/bin:$PATH" >> $SHELL_CONFIG && source $SHELL_CONFIG
 
+echo "==> Bundling engineering Brewfile to install remaining developer tools and various other niceties…"
+curl https://raw.githubusercontent.com/hellobrightline/workstation/main/Brewfile | brew bundle --file=-
+
 echo "==> Installing asdf…"
 brew install asdf
 echo
@@ -118,9 +121,6 @@ echo "==> Installing yarn asdf plugin"
 asdf plugin-list | grep yarn || asdf plugin-add yarn
 bash $ASDF_DATA_DIR/plugins/nodejs/bin/import-release-team-keyring
 echo
-
-echo "==> Bundling engineering Brewfile to install remaining developer tools and various other niceties…"
-curl https://raw.githubusercontent.com/emiliohealth/workstation/main/Brewfile | brew bundle --file=-
 
 # All done!
 echo "==> SUCCESS! Your development environment is now bootstrapped!"
