@@ -30,3 +30,4 @@
 - [Design Patterns: Elements of Reusable Object-Oriented Software](https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612), by "The Gang of Four" (Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides)
 - [Extreme Programming Explained: Embrace Change](https://www.amazon.com/Extreme-Programming-Explained-Embrace-Change/dp/0321278658), by Kent Beck
 - [A Pattern Language: Towns, Buildings, Construction](https://www.amazon.com/Pattern-Language-Buildings-Construction-Environmental/dp/0195019199), by [Christopher Alexander](http://www.patternlanguage.com), Sara Ishikawa, Murray Silverstein
+- [Domain-Driven Design: Tackling Complexity in the Heart of Software](https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215), by [Eric Evans](https://domaindrivendesign.org/about-us/)
