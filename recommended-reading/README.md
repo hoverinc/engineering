@@ -11,6 +11,11 @@
 ## Management
 
 - [Resilient Management](https://resilient-management.com), by [Lara Hogan](https://larahogan.me)
+- [Radical Candor](https://www.amazon.com/Radical-Candor-Revised-Kick-Ass-Humanity/dp/1250235375), by [Kim Scott](https://www.radicalcandor.com)
+- [Crucial Conversations: Tools for Talking When Stakes Are High](https://www.amazon.com/Crucial-Conversations-Talking-Stakes-Second/dp/0071771328), by Kerry Patterson, Joseph Grenny, Ron McMillan, Al Switzler
+- [Dare to Lead: Brave Work. Tough Conversations. Whole Hearts.](https://www.amazon.com/Dare-Lead-Brave-Conversations-Hearts/dp/0399592520), by Brené Brown
+- [3 Vital Questions: Transforming Workplace Drama](https://www.amazon.com/Vital-Questions-Transforming-Workplace-Drama/dp/0996871837), by David Emerald
+- [The Manager's Path: A Guide for Tech Leaders Navigating Growth and Change](https://www.amazon.com/Managers-Path-Leaders-Navigating-Growth/dp/1491973897), by Camille Fournier
 
 ## Ruby
 
