@@ -1,7 +1,5 @@
 tap 'codefresh-io/cli' # tap Codefresh homebrew repo
 
-cask 'aws-vault'
-
 brew 'awscli'
 brew 'aws-iam-authenticator'
 brew 'aws-okta'
@@ -22,6 +20,7 @@ brew 'watch'
 brew 'yamllint'
 brew 'yq'
 
+cask 'aws-vault'
 cask 'docker'
 cask 'firefox'
 cask 'google-chrome'
