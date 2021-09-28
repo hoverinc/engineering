@@ -19,6 +19,7 @@ brew 'jq'
 brew 'rbenv'
 brew 'redis', restart_service: :changed
 brew 'watch'
+brew 'yamllint'
 brew 'yq'
 
 cask 'docker'
