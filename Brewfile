@@ -22,7 +22,6 @@ brew 'graphviz'
 brew 'htop'
 brew 'hub'
 brew 'jq'
-brew 'nvm'
 brew 'rbenv'
 brew 'redis', restart_service: :changed
 brew 'watch'
