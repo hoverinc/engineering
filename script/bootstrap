@@ -102,7 +102,7 @@ rm strap.sh
 echo
 
 # Set the Ruby version, same as the .ruby-version file
-ruby_version="2.6.5"
+ruby_version="3.0.2"
 
 # Update Homebrew and ruby-build to get the latest list of Rubies
 brew update
