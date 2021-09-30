@@ -136,7 +136,7 @@ echo
 
 # Install nvm via its install script, not Homebrew
 echo "==> Installing nvm…"
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 echo
 
 # Create NVM’s working directory if it doesn’t exist
