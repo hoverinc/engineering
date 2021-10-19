@@ -55,7 +55,7 @@ We use [GitHub Package Registry](https://docs.github.com/en/packages/working-wit
 8. On the resulting screen open the **Enable SSO** drop-down and click the **Authorize** button
 9. Add the following line to your `~/.bash_profile` / `.zshrc`:
   ```
-  # "hover packages" github token
+  # "HOVER packages" github token
   export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=<PASTE YOUR TOKEN HERE>
   ```
 10. You should now be able run `bundle install` in a new `Terminal.app` tab/window
