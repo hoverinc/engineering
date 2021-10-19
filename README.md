@@ -40,6 +40,27 @@ You'll be asked for your:
 - Installs NVM, the latest Node, and the latest NPM
 - Installs the particular versions of Postgres and PostGIS that we care about
 
+## Bundler Setup
+
+We use [GitHub Package Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-rubygems-registry) for private repo RubyGems which requires a personal access token.
+
+1. Go to [Settings › Developer Settings › Personal access tokens](https://github.com/settings/tokens)
+2. Click on **Generate new token**
+3. Set the **Note** field to `HOVER packages`
+4. Set **Expiration** to `90 days`
+5. Check the **repo** and **read:packages** scopes
+6. Click on **Generate token**
+7. Copy the token!
+8. Save it to you _1Password_ vault
+8. On the resulting screen open the **Enable SSO** drop-down and click the **Authorize** button
+9. Add the following line to your `~/.bash_profile` / `.zshrc`:
+  ```
+  # "hover packages" github token
+  export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=<PASTE YOUR TOKEN HERE>
+  ```
+10. You should now be able run `bundle install` in a new `Terminal.app` tab/window
+11. **Important:** Add a recurring calendar event to remind you every 3 months to replace your token so you're not left scratching your head when your development environment breaks
+
 # Contents of the Repo
 
 - [Recommended Reading](https://github.com/hoverinc/engineering/blob/master/recommended-reading)
