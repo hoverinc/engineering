@@ -53,7 +53,7 @@ We use [GitHub Package Registry](https://docs.github.com/en/packages/working-wit
 7. Copy the token!
 8. Save it to you _1Password_ vault
 8. On the resulting screen open the **Enable SSO** drop-down and click the **Authorize** button
-9. Add the following line to your `~/.bash_profile` / `.zshrc`:
+9. Add the following line to your `~/.bash_profile` / `~/.zshrc`:
   ```
   # "HOVER packages" github token
   export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=<PASTE YOUR TOKEN HERE>
