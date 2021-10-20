@@ -168,12 +168,12 @@ if [[ $postgres_installed == "false" ]]; then
   echo
 
   # Re-install latest Postgres
-  echo "==> Re-installing latest Postgres…"
+  echo "==> Installing latest Postgres…"
   brew install postgresql
   echo
 
   # Ensure that the Postgresql service is running
-  echo "==> Start Postgis service…"
+  echo "==> Start Postgres service…"
   brew services restart postgresql
 
   db_user_created=$(psql postgres -t -c "SELECT true FROM pg_roles WHERE rolname = 'postgres'")
