@@ -1,6 +1,12 @@
 # Brightline Engineering Workstation Setup
 
-https://github.com/emiliohealth/workstation
+This setup has been tested on M1 macbook pros. 
+
+There may be bugs that arise from changes to homebrew or other packages or from using more recent operating systems or chip architectures. 
+
+If you encounter problems, feel free to reach out to your onboarding buddy. If you both still have problems, contact [James Hart](https://brightlinehealth.slack.com/team/U011R7G5RRD) on Slack.
+
+> **Note:** JAMF will slowly install applications on first boot that are required for working at Brightline. Things like Slack, Chrome, Office Suite, 1password, etc... They'll be installed as you work through these instructions.
 
 # Development setup
 
@@ -36,5 +42,9 @@ You'll be asked for your:
   > - Installs the latest macOS software updates (for better security)
   > - Installs dotfiles from a user's https://github.com/username/dotfiles repository and runs script/setup to configure them; also runs script/strap-after-setup after setting up everything else
   > - Installs software from a user's Brewfile in their https://github.com/username/homebrew-brewfile repository or .Brewfile in their home directory.
-- Installs everything from this repo's [`Brewfile`](https://github.com/hoverinc/engineering/blob/master/Brewfile)
+- Installs everything from this repo's [`Brewfile`](https://github.com/hellobrightline/workstation/blob/main/Brewfile)
 - Installs asdf, ruby, node, and yarn
+
+## Next Steps
+
+Hop over to https://github.com/hellobrightline/reef and follow the Setup instructions to configure our primary application, which is known as Reef.
