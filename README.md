@@ -16,7 +16,7 @@ Copy/paste this into `Terminal.app` on your Mac
 curl https://raw.githubusercontent.com/hellobrightline/workstation/main/script/bootstrap | sh
 ```
 
-> Note: You may need to run this command twice, due to an unknown bug right after closing the GitHub browser. If the script halts, re-run the command below to finish bootstrapping.
+> Note: You may need to run this command twice, due to an unknown bug right after closing the GitHub browser. If the script halts, re-run the command above to finish bootstrapping.
 
 You'll be asked for your:
 
