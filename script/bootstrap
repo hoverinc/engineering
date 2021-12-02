@@ -134,9 +134,12 @@ echo "==> Installing the Bundler Ruby gem…"
 rbenv exec gem install bundler
 echo
 
+# Read the NVM version from .nvm-version file
+nvm_version=`cat .nvm-version`
+
 # Install nvm via its install script, not Homebrew
-echo "==> Installing nvm…"
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+echo "==> Installing NVM…"
+curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v$nvm_version/install.sh" | bash
 echo
 
 # Create NVM’s working directory if it doesn’t exist
