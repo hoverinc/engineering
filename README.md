@@ -7,7 +7,7 @@ https://github.com/hoverinc/engineering
 Copy/paste this into `Terminal.app` on your Mac
 
 ```sh
-curl https://raw.githubusercontent.com/hoverinc/engineering/master/script/bootstrap | sh
+curl https://raw.githubusercontent.com/hoverinc/engineering/main/script/bootstrap | sh
 ```
 
 You'll be asked for your:
@@ -35,7 +35,7 @@ You'll be asked for your:
     > - Installs the latest macOS software updates (for better security)
     > - Installs dotfiles from a user's https://github.com/username/dotfiles repository and runs script/setup to configure them; also runs script/strap-after-setup after setting up everything else
     > - Installs software from a user's Brewfile in their https://github.com/username/homebrew-brewfile repository or .Brewfile in their home directory.
-- Installs everything from this repo's [`Brewfile`](https://github.com/hoverinc/engineering/blob/master/Brewfile)
+- Installs everything from this repo's [`Brewfile`](https://github.com/hoverinc/engineering/blob/main/Brewfile)
 - Installs Ruby
 - Installs NVM, the latest Node, and the latest NPM
 - Installs the particular versions of Postgres and PostGIS that we care about
@@ -63,7 +63,7 @@ We use [GitHub Package Registry](https://docs.github.com/en/packages/working-wit
 
 # Contents of the Repo
 
-- [Recommended Reading](https://github.com/hoverinc/engineering/blob/master/recommended-reading)
+- [Recommended Reading](https://github.com/hoverinc/engineering/blob/main/recommended-reading)
 
 # Other Resources
 
