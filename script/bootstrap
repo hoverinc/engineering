@@ -135,7 +135,7 @@ rbenv exec gem install bundler
 echo
 
 # Read the NVM version from .nvm-version file
-nvm_version=`cat .nvm-version`
+nvm_version=`curl https://raw.githubusercontent.com/hoverinc/engineering/main/.nvm-version`
 
 # Install nvm via its install script, not Homebrew
 echo "==> Installing NVM…"
