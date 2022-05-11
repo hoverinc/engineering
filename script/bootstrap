@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# script/bootstrap: Setup a new laptop at HOVER
+# script/bootstrap: Setup a new laptop at Brightline
 
 # Exit script if any commands return errors (if they exit with non-zero)
 set -e
@@ -15,9 +15,12 @@ echo
 SHELL_CONFIG="$HOME/.zshrc"
 touch $SHELL_CONFIG
 
-# Check if RSA SSH keys already exist
+# Check if RSA or Ed25519 SSH keys already exist
 if [[ -f ~/.ssh/id_rsa ]]; then
   echo "==> Found SSH key in ~/.ssh/id_rsa"
+  echo
+elif [[ -f ~/.ssh/id_ed25519 ]]; then
+  echo "==> Found SSH key in ~/.ssh/id_ed25519"
   echo
 else
   # Setup Git/GitHub
@@ -108,15 +111,21 @@ echo "==> Bundling engineering Brewfile to install remaining developer tools and
 curl https://raw.githubusercontent.com/hellobrightline/workstation/main/Brewfile | brew bundle --file=-
 
 echo "==> Installing asdf…"
-brew install asdf
-echo
+if command -v asdf &> /dev/null; then
+  echo "    asdf already installed. Skipping."
+else
+  brew install asdf
+  echo
+fi
 
 echo "==> Injecting asdf into PATH"
-if grep -Fq "ASDF_DATA_DIR" $SHELL_CONFIG
+ASDF_DATA_DIR=`brew --prefix asdf`
+
+if grep -Fq "$ASDF_DATA_DIR" $SHELL_CONFIG
 then
   echo "    Already found asdf in path. Skipping."
 else
-  echo 'export ASDF_DATA_DIR=`brew --prefix asdf`/' >> $SHELL_CONFIG
+  echo "export ASDF_DATA_DIR=$ASDF_DATA_DIR/" >> $SHELL_CONFIG
   echo 'source $ASDF_DATA_DIR/asdf.sh' >> $SHELL_CONFIG
   echo
 fi
@@ -128,12 +137,11 @@ asdf plugin-list | grep ruby || asdf plugin-add ruby
 echo
 
 echo "==> Installing node asdf plugin"
-asdf plugin-list | grep nodejs || asdf plugin-add nodejs  
+asdf plugin-list | grep nodejs || asdf plugin-add nodejs
 echo
 
 echo "==> Installing yarn asdf plugin"
 asdf plugin-list | grep yarn || asdf plugin-add yarn
-bash $ASDF_DATA_DIR/plugins/nodejs/bin/import-release-team-keyring
 echo
 
 # All done!
