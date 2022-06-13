@@ -178,10 +178,19 @@ fi
 echo "==> Start Postgres service…"
 brew services restart postgresql
 
+# Wait until PostgreSQL has started up and is ready
+while ! pg_isready -q
+do
+  echo `pg_isready`
+  echo "==> $(date) - waiting for database to start"
+  sleep 1
+done
+
+# Check if a Postgres superuser has been created
 db_user_created=$(psql postgres -t -c "SELECT true FROM pg_roles WHERE rolname = 'postgres'")
 
 if [[ $db_user_created=="t" ]]; then
-  echo "==> 'postgres' superuser already exists"
+  echo "==> A superuser named 'postgres' already exists"
 else
   echo '==> Creating PostgresQL superuser, named: "postgres"…'
   psql postgres -c "CREATE USER postgres SUPERUSER";
