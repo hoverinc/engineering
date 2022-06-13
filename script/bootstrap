@@ -13,11 +13,12 @@ echo "==> Running script/bootstrap…"
 echo
 
 # Create either .bash_profile (default) or .zshrc in $HOME directory
-echo "==> Do you plan to use Z shell? (y/N)"
+echo "==> Do you plan to use Z shell? (n/Y)"
 read zsh_user </dev/tty || {
-  zsh_user="n"
+  zsh_user="y"
 }
 
+# Which shell is preferred? zsh or bash
 if [[ $zsh_user == "y" ]]; then
   SHELL_CONFIG="$HOME/.zshrc"
 else
