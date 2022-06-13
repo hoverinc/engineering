@@ -153,42 +153,39 @@ nvm install  --lts --latest-npm
 set -e
 echo
 
-postgres_installed="false"
+# Prepare Homebrew to install Postgres
+brew cleanup
+echo
 
-# Check if Postgres is already installed
-if which psql > /dev/null; then
-  postgres_installed="true"
-fi
+# Delete any previous Postgres data directory
+echo "==> Deleting Postgres data directory…"
+rm -rf /usr/local/var/postgres
+echo
 
-# Install Postgres
-if [[ $postgres_installed == "false" ]]; then
-  brew cleanup
-  echo
-
-  # Delete any previous Postgres data directory
-  echo "==> Deleting Postgres data directory…"
-  rm -rf /usr/local/var/postgres
-  echo
-
-  # Re-install latest Postgres
+# Install or upgrade Postgres
+if brew ls --versions postgres > /dev/null; then
+  # Postgres is installed
+  echo "==> Installing Postgres to latest version…"
+  brew upgrade postgresql
+else
+  # Postgres is not installed
   echo "==> Installing latest Postgres…"
   brew install postgresql
-  echo
-
-  # Ensure that the Postgresql service is running
-  echo "==> Start Postgres service…"
-  brew services restart postgresql
-
-  db_user_created=$(psql postgres -t -c "SELECT true FROM pg_roles WHERE rolname = 'postgres'")
-
-  if [[ $db_user_created=="t" ]]; then
-    echo "==> 'postgres' superuser already exists"
-  else
-    echo '==> Creating PostgresQL superuser, named: "postgres"…'
-    psql postgres -c "CREATE USER postgres SUPERUSER";
-  fi
-  echo
 fi
+
+# Ensure that the Postgresql service is running
+echo "==> Start Postgres service…"
+brew services restart postgresql
+
+db_user_created=$(psql postgres -t -c "SELECT true FROM pg_roles WHERE rolname = 'postgres'")
+
+if [[ $db_user_created=="t" ]]; then
+  echo "==> 'postgres' superuser already exists"
+else
+  echo '==> Creating PostgresQL superuser, named: "postgres"…'
+  psql postgres -c "CREATE USER postgres SUPERUSER";
+fi
+echo
 
 echo "==> Running engineering Brewfile to install remaining developer tools and various other niceties…"
 curl https://raw.githubusercontent.com/hoverinc/engineering/main/Brewfile | brew bundle --file=-
