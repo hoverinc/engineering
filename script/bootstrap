@@ -154,7 +154,10 @@ nvm install  --lts --latest-npm
 set -e
 echo
 
-# Prepare Homebrew to install Postgres
+echo "==> Running hoverinc/engineering Brewfile to install remaining developer tools and various other niceties…"
+curl https://raw.githubusercontent.com/hoverinc/engineering/main/Brewfile | brew bundle --file=-
+
+# Cleanup Homebrew packages
 brew cleanup
 echo
 
@@ -162,17 +165,6 @@ echo
 echo "==> Deleting Postgres data directory…"
 rm -rf /usr/local/var/postgres
 echo
-
-# Install or upgrade Postgres
-if brew ls --versions postgres > /dev/null; then
-  # Postgres is installed
-  echo "==> Installing Postgres to latest version…"
-  brew upgrade postgresql
-else
-  # Postgres is not installed
-  echo "==> Installing latest Postgres…"
-  brew install postgresql
-fi
 
 # Ensure that the Postgresql service is running
 echo "==> Start Postgres service…"
@@ -196,9 +188,6 @@ else
   psql postgres -c "CREATE USER postgres SUPERUSER";
 fi
 echo
-
-echo "==> Running engineering Brewfile to install remaining developer tools and various other niceties…"
-curl https://raw.githubusercontent.com/hoverinc/engineering/main/Brewfile | brew bundle --file=-
 
 # All done!
 echo "==> SUCCESS! Your development environment is now bootstrapped!"
