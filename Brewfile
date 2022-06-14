@@ -22,9 +22,9 @@ brew 'graphviz'
 brew 'htop'
 brew 'hub'
 brew 'jq'
+brew 'postgres'
 brew 'rbenv'
 brew 'redis', restart_service: :changed
 brew 'watch'
 brew 'yamllint'
 brew 'yq'
-
