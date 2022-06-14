@@ -38,7 +38,7 @@ You'll be asked for your:
 - Installs everything from this repo's [`Brewfile`](https://github.com/hoverinc/engineering/blob/main/Brewfile)
 - Installs Ruby
 - Installs NVM, the latest Node, and the latest NPM
-- Installs the particular versions of Postgres and PostGIS that we care about
+- Installs Postgres
 
 ## Bundler Setup
 
