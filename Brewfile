@@ -7,7 +7,7 @@ tap 'homebrew/services'
 tap 'codefresh-io/cli' # tap Codefresh homebrew repo
 
 brew 'aws-iam-authenticator'
-brew 'aws-okta'
+# brew 'aws-okta'
 brew 'awscli'
 brew 'bash-completion'
 brew 'codefresh'
