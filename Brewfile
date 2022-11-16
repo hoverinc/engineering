@@ -24,7 +24,7 @@ brew 'jq'
 brew 'k9s'
 brew 'kubectl'
 brew 'kubectx'
-brew 'postgresql@14'
+brew 'postgresql'
 brew 'rbenv'
 brew 'redis', restart_service: :changed
 brew 'watch'
