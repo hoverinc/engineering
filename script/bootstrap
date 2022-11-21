@@ -168,12 +168,12 @@ echo
 
 # Delete any previous Postgres data directory
 echo "==> Deleting Postgres data directory…"
-rm -rf /usr/local/var/postgres
+rm -rf /opt/homebrew/var/postgres
 echo
 
 # Ensure that the Postgresql service is running
 echo "==> Start Postgres service…"
-brew services restart postgresql
+brew services restart postgresql@14
 
 # Wait until PostgreSQL has started up and is ready
 while ! pg_isready -q
