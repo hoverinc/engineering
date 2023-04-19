@@ -26,9 +26,15 @@ else
 fi
 touch $SHELL_CONFIG
 
+default_rsa_path=~/.ssh/hover_github/id_rsa
+
+# Ask the user where they want their RSA key stored
+read -p "==> Where you would like your rsa_key stored [$default_rsa_path]: " rsa_path
+rsa_path=${rsa_path:-$default_rsa_path}
+
 # Check if RSA SSH keys already exist
-if [[ -f ~/.ssh/id_rsa ]]; then
-  echo "==> Found SSH key in ~/.ssh/id_rsa"
+if [[ -f "$rsa_path" ]]; then
+  echo "==> Found SSH key in $rsa_path"
   echo
 else
   # Setup Git/GitHub
@@ -59,12 +65,12 @@ else
 
   # Add SSH key loading to SSH config
   echo "==> Adding SSH config to automatically load SSH keys"
-  grep -qF -- "IdentityFile ~/.ssh/id_rsa" ~/.ssh/config || echo "\n\nHost *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa\n\n" >> ~/.ssh/config
+  grep -qF -- "IdentityFile $rsa_path" ~/.ssh/config || echo "\n\nHost *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile $rsa_path\n\n" >> ~/.ssh/config
   echo
 
   # Add SSH private key to the ssh-agent and store passphrase in your keychain
   echo "==> Adding SSH key to ssh-agent and storing passphrase in your keychain"
-  ssh-add -K ~/.ssh/id_rsa
+  ssh-add -K $rsa_path
   echo
 
   echo "==> Your browser will be opened to a GitHub SSH Keys settings page…"
@@ -85,7 +91,7 @@ else
 fi
 
 echo "==> Copying your public SSH key to clipboard…"
-pbcopy < ~/.ssh/id_rsa.pub
+pbcopy < $rsa_path
 echo
 
 # Download strap.sh and run it
