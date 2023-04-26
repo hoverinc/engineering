@@ -74,10 +74,6 @@ We use [GitHub Package Registry](https://docs.github.com/en/packages/working-wit
 
 11. **Important:** Add a recurring calendar event to remind you every 3 months to replace your token so you're not left scratching your head when your development environment breaks
 
-
-
-
-
 # Contents of the Repo
 
 - [Recommended Reading](https://github.com/hoverinc/engineering/blob/main/recommended-reading)
