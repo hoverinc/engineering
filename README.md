@@ -59,7 +59,24 @@ We use [GitHub Package Registry](https://docs.github.com/en/packages/working-wit
   export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=<PASTE YOUR TOKEN HERE>
   ```
 10. You should now be able run `bundle install` in a new `Terminal.app` tab/window
+
+* NOTE: If you encounter an error that says the following while running `bundle install`:
+        
+  ```
+  Bad username or password for https://<TOKEN>@rubygems.pkg.github.com/hoverinc/.
+  Please double-check your credentials and correct them.
+  ```
+
+* Run the following command: 
+  ```
+  bundle config https://rubygems.pkg.github.com/hoverinc <GITHUB-USERNAME>:<TOKEN>
+  ```
+
 11. **Important:** Add a recurring calendar event to remind you every 3 months to replace your token so you're not left scratching your head when your development environment breaks
+
+
+
+
 
 # Contents of the Repo
 
