@@ -41,6 +41,10 @@ You'll be asked for your:
 - Installs NVM, the latest Node, and the latest NPM
 - Installs Postgres
 
+
+## AWS Credentials
+Follow instructions on this page [Installing gimme-aws-credentials](https://hoverinc.atlassian.net/wiki/spaces/EN/pages/2790850693/Installing+gimme-aws-credentials) to set up your aws credentials
+
 ## Bundler Setup
 
 We use [GitHub Package Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-rubygems-registry) for private repo RubyGems which requires a personal access token.
@@ -62,13 +66,13 @@ We use [GitHub Package Registry](https://docs.github.com/en/packages/working-wit
 10. You should now be able run `bundle install` in a new `Terminal.app` tab/window
 
 * NOTE: If you encounter an error that says the following while running `bundle install`:
-        
+
   ```
   Bad username or password for https://<TOKEN>@rubygems.pkg.github.com/hoverinc/.
   Please double-check your credentials and correct them.
   ```
 
-* Run the following command: 
+* Run the following command:
   ```
   bundle config https://rubygems.pkg.github.com/hoverinc <GITHUB-USERNAME>:<TOKEN>
   ```

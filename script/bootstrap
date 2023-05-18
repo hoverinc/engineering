@@ -163,11 +163,6 @@ echo
 echo "==> Running hoverinc/engineering Brewfile to install remaining developer tools and various other niceties…"
 curl https://raw.githubusercontent.com/hoverinc/engineering/main/Brewfile | brew bundle --file=-
 
-echo "==> Install aws-okta from older source as it's disabled and will be deprecated"
-curl https://raw.githubusercontent.com/Homebrew/homebrew-core/bafe9b47dedba4fa19369167fe3363ac5bfcc97c/Formula/aws-okta.rb > $(find $(brew --repository) -name aws-okta.rb | head -n 1)
-brew install aws-okta
-echo
-
 # Cleanup Homebrew packages
 brew cleanup
 echo
