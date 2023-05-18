@@ -26,7 +26,7 @@ else
 fi
 touch $SHELL_CONFIG
 
-default_rsa_path=~/.ssh/hover_github/id_rsa
+default_rsa_path=~/.ssh/id_rsa
 
 # Ask the user where they want their RSA key stored
 read -p "==> Where you would like your rsa_key stored [$default_rsa_path]: " rsa_path
