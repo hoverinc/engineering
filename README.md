@@ -82,7 +82,3 @@ We use [GitHub Package Registry](https://docs.github.com/en/packages/working-wit
 # Contents of the Repo
 
 - [Recommended Reading](https://github.com/hoverinc/engineering/blob/main/recommended-reading)
-
-# Other Resources
-
-Hover Employees should take a look at the [engineering-internal](https://github.com/hoverinc/engineering-internal) repo

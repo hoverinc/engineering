@@ -4,12 +4,10 @@ tap 'homebrew/cask'
 tap 'homebrew/cask-fonts'
 tap 'homebrew/core'
 tap 'homebrew/services'
-tap 'codefresh-io/cli' # tap Codefresh homebrew repo
 
 brew 'aws-iam-authenticator'
 brew 'awscli'
 brew 'bash-completion'
-brew 'codefresh'
 brew 'docker-completion'
 brew 'docker-credential-helper'
 brew 'gh'
