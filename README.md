@@ -50,7 +50,7 @@ Follow instructions on this page [Installing gimme-aws-credentials](https://hove
 We use [GitHub Package Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-rubygems-registry) for private repo RubyGems which requires a personal access token.
 
 1. Go to [Settings › Developer Settings › Personal access tokens](https://github.com/settings/tokens)
-2. Click on **Generate new token**
+2. Click on **Generate new token (classic)**
 3. Set the **Note** field to `HOVER packages`
 4. Set **Expiration** to `90 days`
 5. Check the **repo** and **read:packages** scopes
