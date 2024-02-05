@@ -45,7 +45,18 @@ You'll be asked for your:
 ## AWS Credentials
 Follow instructions on this page [Installing gimme-aws-credentials](https://hoverinc.atlassian.net/wiki/spaces/EN/pages/2790850693/Installing+gimme-aws-credentials) to set up your aws credentials
 
-## Bundler Setup
+## Npm Setup
+
+We use the npm registry for some packages which require a private token to be able to install. You will need 1password access to be able to get the token. If you do not have 1password access, [request access](https://hoverinc.atlassian.net/servicedesk/customer/portal/5/group/18/create/96?summary=1password%20vault%20access&description=May%20I%20have%20access%20to%20the%20Eng%20-%20DevEnv%20vault%20in%201Password%3F) to the 1Password `Eng - DevEnv` vault from IT. You should add this token to your environment to prevent errors when running `npm` or `yarn`.
+
+1. [Open 1password](https://start.1password.com/open/i?a=LXLRBATJRZFOFATOCE6F6QCY6I&v=jbyck6kbafahfpqtkzn25fwydm&i=cipwazs6g5dw7guy76xpt5mfz4&h=team-hover.1password.com), and find the `Eng - DevEnv` vault and find the entry for "NPM / HOVER_READ / @hover (read-only)".
+1. Add the following line to your `~/.bash_profile` / `~/.zshrc`:
+  ```
+  # "@hover" npm packages
+  export NPM_TOKEN=<PASTE TOKEN HERE>
+  ```
+
+## Bundler and Github packages Setup
 
 We use [GitHub Package Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-rubygems-registry) for private repo RubyGems which requires a personal access token.
 
@@ -56,14 +67,15 @@ We use [GitHub Package Registry](https://docs.github.com/en/packages/working-wit
 5. Check the **repo** and **read:packages** scopes
 6. Click on **Generate token**
 7. Copy the token!
-8. Save it to you _1Password_ vault
-8. On the resulting screen open the **Enable SSO** drop-down and click the **Authorize** button
-9. Add the following line to your `~/.bash_profile` / `~/.zshrc`:
+8. Save it to your _1Password_ vault
+9. On the resulting screen open the **Enable SSO** drop-down and click the **Authorize** button
+10. Add the following line to your `~/.bash_profile` / `~/.zshrc`:
   ```
   # "HOVER packages" github token
-  export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=<PASTE YOUR TOKEN HERE>
+  export GITHUB_TOKEN=<PASTE YOUR TOKEN HERE>
+  export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=${GITHUB_TOKEN}
   ```
-10. You should now be able run `bundle install` in a new `Terminal.app` tab/window
+11. You should now be able run `bundle install` in a new `Terminal.app` tab/window
 
 * NOTE: If you encounter an error that says the following while running `bundle install`:
 
@@ -77,7 +89,7 @@ We use [GitHub Package Registry](https://docs.github.com/en/packages/working-wit
   bundle config https://rubygems.pkg.github.com/hoverinc <GITHUB-USERNAME>:<TOKEN>
   ```
 
-11. **Important:** Add a recurring calendar event to remind you every 3 months to replace your token so you're not left scratching your head when your development environment breaks
+12. **Important:** Add a recurring calendar event to remind you every 3 months to replace your token so you're not left scratching your head when your development environment breaks
 
 # Contents of the Repo
 
