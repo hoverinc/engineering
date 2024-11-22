@@ -96,7 +96,7 @@ echo
 
 # Download strap.sh and run it
 echo "==> Downloading strap.sh script from github.com/MikeMcQuaid/strap…"
-curl https://raw.githubusercontent.com/MikeMcQuaid/strap/master/bin/strap.sh -o strap.sh
+curl https://raw.githubusercontent.com/MikeMcQuaid/strap/master/strap.sh -o strap.sh
 echo
 
 echo "==> Strapping your Mac…"
@@ -110,6 +110,8 @@ echo
 
 # Set the Ruby version, same as the .ruby-version file
 ruby_version=`curl https://raw.githubusercontent.com/hoverinc/engineering/main/.ruby-version`
+
+echo "export PATH=/opt/homebrew/bin:$PATH" >> $SHELL_CONFIG
 
 # Update Homebrew and ruby-build to get the latest list of Rubies
 brew update
