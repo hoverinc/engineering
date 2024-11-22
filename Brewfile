@@ -1,6 +1,5 @@
 tap 'buo/cask-upgrade'
 tap 'homebrew/bundle'
-tap 'homebrew/cask-fonts'
 tap 'homebrew/services'
 
 brew 'aws-iam-authenticator'
